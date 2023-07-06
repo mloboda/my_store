@@ -1,0 +1,75 @@
+body {
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.product {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.product img {
+  width: 50px;
+  height: 50px;
+  margin-left: 10px;
+  order: 3;
+}
+
+.product .name {
+  margin-right: 10px;
+  order: 2;
+}
+
+.product .quantity {
+  order: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quantity input[type="number"] {
+    text-align: center;
+  }
+
+.product .price {
+  font-weight: bold;
+  margin-right: 10px;
+  order: 0;
+}
+
+hr {
+  margin-top: 20px;
+}
+
+.total {
+  font-weight: bold;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.total_1 {
+    margin-top: -40px;
+}
+
+.checkout-btn {
+    order: 2; /* Оплатить - справа */
+}
+
+
+.checkout-btn {
+  background-color: #343a40;
+  border-color: #343a40;
+  color: #fff;
+  float: right;
+}
+
+.checkout-btn:hover {
+  background-color: #212529;
+  border-color: #212529;
+  color: #fff;
+}

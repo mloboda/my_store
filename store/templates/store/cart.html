@@ -1,0 +1,43 @@
+{% extends 'base_page.html' %}
+{% load static %}
+
+{% block title %}
+  Product Cart
+{% endblock title %}
+
+{% block head %}
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'store/css/style.css' %}">
+{% endblock head %}
+
+{% block content %}
+<h1 class="m-5">Product Cart</h1>
+{% for item in items %}
+<div class="container">
+  <div class="products">
+    <div class="product">
+      <div class="price">{{ item.amount }} ₴</div>
+      <div class="quaqntity" style="margin-left: 10px;">{{ item.quantity }}</div>
+      <div class="product-info">
+        <div class="name">{{ item.product.name }}</div>
+      </div>
+      <div class="image-container">
+        <img src="{{ item.product.image_url.url }}" alt="Товар 1">
+        <form method="post" action="{% url 'cart_delete_item' item.pk %}">
+          {% csrf_token %}
+          <button class="btn btn-outline-dark" type="submit">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <hr>
+</div>
+{% endfor %}
+<div class="container">
+  <div class="total">
+    <div class="total_1">{{ cart.amount }} ₴</div>
+      <a class="btn btn-primary checkout-btn mb-4" href="{% url 'make_order' %}">Check out</a>
+  </div>
+</div>
+
+{% endblock content %}
