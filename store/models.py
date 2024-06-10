@@ -34,15 +34,23 @@ class Order(models.Model):
     STATUS_CART = 'cart'
     STATUS_WAITING_FOR_PAYMENT = 'waiting_for_payment'
     STATUS_PAID = 'paid'
+    STATUS_SENT = 'sent'
     STATUS_CHOICES = [
         (STATUS_CART, 'cart'),
         (STATUS_WAITING_FOR_PAYMENT, 'waiting_for_payment'),
         (STATUS_PAID, 'paid'),
+        (STATUS_SENT, 'sent'),
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=32, choices=STATUS_CHOICES, default=STATUS_CART)
-    amount = models.DecimalField(max_digits=20, decimal_places=2, blank=True, null=True)
+    amount = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    creation_time = models.DateTimeField(auto_now_add=True)
+    first_name = models.CharField(max_length=50, null=True)
+    last_name = models.CharField(max_length=50, null=True)
+    phone_number = models.CharField(max_length=15, null=True)
+    city = models.CharField(max_length=100, null=True)
+    post_office = models.CharField(max_length=100, null=True)
 
     class Meta:
         ordering = ['-pk']
@@ -51,7 +59,7 @@ class Order(models.Model):
         return f'{self.user} - {self.amount} - {self.status}'
 
     @staticmethod
-    def get_cart(user):
+    def get_cart(user: User):
         cart = Order.objects.filter(user=user, status=Order.STATUS_CART).first()
         if not cart:
             cart = Order.objects.create(user=user, status=Order.STATUS_CART, amount=0)
@@ -80,7 +88,7 @@ class OrderItem(models.Model):
         ordering = ['-pk']
 
     def __str__(self):
-        return f'{self.product} - {self.price} - {self.quantity}'
+        return f'{self.product} - {self.price} - {self.quantity} - {self.order.status}'
 
     @property
     def amount(self):

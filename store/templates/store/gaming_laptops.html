@@ -1,9 +1,77 @@
-{% extends 'store/base_products.html' %}
+{% extends 'store/home.html' %}
 
 {% block title %}
-    Gaming laptops
+    Ноутбуки
 {% endblock title %}
-text
-{% block text %}
-    Gaming laptops
-{% endblock text %}
+
+{% block header %}
+    <header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-4">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Ноутбуки</h1>
+                </div>
+            </div>
+    </header>
+{% endblock header %}
+
+
+{% block sort %}
+    <div class="container mt-3" style="max-width: 66%;">
+        <form method="get">
+            <div class="row justify-content-end">
+                <div class="col-auto mr-3">
+                    <label for="sort_by" class="mr-2">Відсортувати за:</label>
+                    <select name="sort_by" id="sort_by" class="form-control">
+                        <option value="">Обрати...</option>
+                        {% for value, label in form.fields.sort_by.choices %}
+                            <option value="{{ value }}" {% if form.cleaned_data.sort_by == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-auto mt-auto">
+                    <button type="submit" class="btn btn-outline-dark">Застосувати</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock sort %}
+
+
+{% block loop %}
+    {% for product in products %}
+
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Product image-->
+                    <img class="card-img-top" src="{{ product.image_url.url }}" alt="Product Image" />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">{{ product.name }}</h5>
+                            <!-- Product price-->
+                            <h6 class="mt-4">Ціна - {{ product.price }} ₴</h6>
+                        </div>
+                    </div>
+                    <form method="post" action="{% url 'add_item_to_cart' product.pk %}">
+                        {% csrf_token %}
+                        <div class="d-block mx-auto" style="max-width: 8rem;">
+                            <h6 class="text-center">Кількість:</h6>
+                            <input class="form-control text-center mb-4" id="inputQuantity" type="number" value="1" min="1" name="quantity">
+                        </div>
+
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent d-flex justify-content-between">
+                            <div>
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'product_detail' product_id=product.pk %}">Деталі</a></div>
+                            </div>
+                            <div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-outline-dark mt-auto">Додати</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    {% endfor %}
+{% endblock loop %}

@@ -15,27 +15,47 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static '/css/styles.css' %}" rel="stylesheet" />
-    {% block head %}{% endblock head %}
+        {% block head %}{% endblock head %}
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                display: flex;
+                flex-direction: column;
+            }
+            .content {
+                flex: 1;
+            }
+            footer {
+                margin-top: auto;
+            }
+        </style>
     </head>
 
     <body>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#!">The gaming store</a>
+                <a class="navbar-brand" href="{% url 'homepage' %}">Computer store</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'homepage' %}">Головна</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'about_us' %}">Про нас</a></li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Store</a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Категорії</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="{% url 'all_products' %}">All Products</a></li>
+                                <li><a class="dropdown-item" href="{% url 'all_products' %}">Всі товари</a></li>
                                 <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="{% url 'game_consoles' %}">Game consoles</a></li>
-                                <li><a class="dropdown-item" href="{% url 'game_laptops' %}">Gaming laptops</a></li>
-                                <li><a class="dropdown-item" href="{% url 'game_pc' %}">Gaming PC</a></li>
+                                <li><a class="dropdown-item" href="{% url 'game_consoles' %}">Ігрові приставки</a></li>
+                                <li><a class="dropdown-item" href="{% url 'game_laptops' %}">Ноутбуки</a></li>
+                                <li><a class="dropdown-item" href="{% url 'game_pc' %}">Персональні комп'ютери</a></li>
+                                <li><a class="dropdown-item" href="{% url 'computer_mice' %}">Комп'ютерні миші</a></li>
+                                <li><a class="dropdown-item" href="{% url 'computer_keyboard' %}">Клавіатури</a></li>
+                                <li><a class="dropdown-item" href="{% url 'computer_headphones' %}">Навушники</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -46,22 +66,23 @@
                             {% if user.is_authenticated %}
                                 {{ user.username }}
                             {% else %}
-                                Log In/Register
+                                Вхід/Реєстрація
                             {% endif %}
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="logInRegister">
                                 {% if user.is_authenticated %}
-                                    <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'profile' %}">Профіль</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'logout' %}">Вихід</a></li>
                                 {% else %}
-                                    <li><a class="dropdown-item" href="{% url 'login' %}">Log In</a></li>
-                                    <li><a class="dropdown-item" href="{% url 'register' %}">Register</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'login' %}">Вхід</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'register' %}">Реєстрація</a></li>
                                 {% endif %}
                             </ul>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-outline-dark" href="{% url 'cart' %}">
                                 <i class="bi-cart-fill me-1"></i>
-                                Cart
+                                Корзина
                             </a>
                         </li>
                     </ul>
@@ -71,12 +92,14 @@
             </div>
         </nav>
 
-        {% block content %}{% endblock content %}
-
-        <!-- Footer-->
-        <footer class="py-5 bg-dark" style="flex-shrink: 0;">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
-        </footer>
+            <div class="content">
+                {% block header %}{% endblock header %}
+                {% block content %}{% endblock content %}
+            </div>
+            <!-- Footer-->
+            <footer class="py-5 bg-dark" style="flex-shrink: 0;">
+                <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2024</p></div>
+            </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>

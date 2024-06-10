@@ -1,20 +1,20 @@
 {% extends 'base_page.html' %}
 
 {% block title %}
-    Product card
+    {{ product.name }}
 {% endblock title %}
 
 {% block content %}
         <!-- Product section-->
-        <section class="py-5">
+        <section class="py-5 main-section">
             <div class="container px-4 px-lg-5 my-5" style="display: flex; flex-direction: column; min-height: 601px;">
                 <div class="row gx-4 gx-lg-5 align-items-center">
                     <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ product.image_url.url }}" alt="..." /></div>
                     <div class="col-md-6">
-                        <div class="small mb-1">SKU: {{ product.code }}</div>
+                        <div class="small mb-1">Код: {{ product.code }}</div>
                         <h1 class="display-5 fw-bolder">{{ product.name }}</h1>
                         <div class="fs-5 mb-5">
-                            <span>Price - {{ product.price }} ₴</span>
+                            <span>Ціна - {{ product.price }} ₴</span>
                         </div>
                         <p class="lead">{{ product.description }}</p>
                         <form method="post" action="{% url 'add_item_to_cart' product.pk %}">
@@ -23,7 +23,7 @@
                             <input class="form-control text-center me-3" id="inputQuantity" name="quantity" type="num" value="1" style="max-width: 3rem" />
                             <button class="btn btn-outline-dark flex-shrink-0" type="submit">
                                 <i class="bi-cart-fill me-1"></i>
-                                Add to cart
+                                Додати до корзини
                             </button>
                         </div>
                         </form>
